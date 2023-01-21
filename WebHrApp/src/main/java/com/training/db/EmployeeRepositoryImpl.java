@@ -1,6 +1,7 @@
 package com.training.db;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.training.app.entity.Employee;
 
@@ -24,26 +25,68 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 
 	@Override
 	public List<Employee> getAllEmployeeBasedOnSalary(int range1, int range2) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return getAllEmployee().stream().filter((e)->{
+			
+			int empSalary = e.getSalary();
+			if(empSalary>=range1 & empSalary<=range2 )
+			{
+				return true;
+			}
+			else return false;
+		}).collect(Collectors.toList());
+		
 	}
 
 	@Override
 	public Employee getEmployeeBasedOnId(int searchId) {
-		// TODO Auto-generated method stub
-		return null;
+
+		return getAllEmployee().stream().filter((e)->{
+			if(e.getEmpId() == searchId)
+			{
+				return true;
+			}
+			else return false;
+		}).findFirst().get();
+		
+	
+		
 	}
 
 	@Override
 	public Employee addNewEmployee(Employee e) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		boolean status =  db.addEmployee(e);
+		if(status) return e;
+		else return null;
 	}
 
 	@Override
 	public Employee updateEmployeeSalary(int searchEmpId, int newSalary) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		// update set salary = 5000 from Employee where empId= 101 
+		
+		boolean isFound = false;
+		Employee empToUpdate = null;
+		int pos = -1;
+		
+		for (Employee e : getAllEmployee()) {
+			pos++;
+			if(e.getEmpId() == searchEmpId)
+			{
+				isFound = true;
+				empToUpdate = e;
+				break;
+			}
+		}
+		
+		if(isFound == true)
+		{
+			db.allEmployees.remove(pos);
+			empToUpdate.setSalary(newSalary);
+			db.allEmployees.add(empToUpdate);
+		}
+		return empToUpdate;
 	}
 
 }

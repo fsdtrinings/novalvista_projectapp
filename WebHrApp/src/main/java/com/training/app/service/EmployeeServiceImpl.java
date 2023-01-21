@@ -25,26 +25,26 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public List<Employee> getAllEmployeeBasedOnSalary(int range1, int range2) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return empRepository.getAllEmployeeBasedOnSalary(range1, range2);
 	}
 
 	@Override
 	public Employee getEmployeeBasedOnId(int searchId) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return empRepository.getEmployeeBasedOnId(searchId);
 	}
 
 	@Override
 	public Employee addNewEmployee(Employee e) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return empRepository.addNewEmployee(e);
 	}
 
 	@Override
 	public Employee updateEmployeeSalary(Employee e) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return empRepository.updateEmployeeSalary(e.getEmpId(), e.getSalary());
 	}
 
 }
